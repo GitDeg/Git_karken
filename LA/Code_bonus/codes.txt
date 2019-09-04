@@ -1,0 +1,4 @@
+all_frames : 	Permet de trouver toutes les frames issues des données de force. 
+		Donne aussi les noms des essais et la longueur des données de forces
+
+choix_filtre :	Essai de plusieurs filtre et visualisation

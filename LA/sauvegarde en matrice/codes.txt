@@ -1,0 +1,8 @@
+Data_EMG_LA :	Input: data.c3d
+		Output: matrice contenant les données EMGs
+
+Data_Fo_LA : 	Input: data.c3d
+		Output: matrice contenant les données Fos
+
+Data_MCV_LA : 	Input: data.c3d
+		Output: matrice contenant les données MCVs 
