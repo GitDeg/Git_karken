@@ -8,9 +8,10 @@ clc
 addpath(genpath('C:\Users\p1218107\Documents\MATLAB'))
 %%
 % pathname = '\\10.89.24.15\j\Valentin\SAUT';
-pathname = 'C:\Users\p1218107\Documents\SAUT';
+pathname = 'C:\Users\p1218107\Documents\Data_Piano\SAUT';
 sujet = {'\001','\002','\003','\004','\005','\006','\007','\008','\009','\010','\011','\012'};
-load('C:\Users\p1218107\Documents\SAUT\allREPS.mat')
+load('C:\Users\p1218107\Documents\Data_Piano\SAUT\allREPS.mat')
+load('C:\Users\p1218107\Documents\Data_Piano\MVC\All_MVC.mat')
 
 GrpNames = {' AntiHoraire ', ...        %% 60 aigue toujours
             ' AntiHoraire Bassin ', ...
@@ -172,7 +173,8 @@ for suj = 1 : 12
         m_acti = mean(mean(all_acti));
         
         for grpi = 1 : 6
-            Data(grpi).EMG.mu(mu).norm = Data(grpi).EMG.mu(mu).cycle_select / m_acti; 
+            Data(grpi).EMG.mu(mu).norm = Data(grpi).EMG.mu(mu).cycle_select / m_acti;
+            Data(grpi).EMG.mu(mu).norm_MVC = Data(grpi).EMG.mu(mu).cycle_select / All_MVC(mu,suj);
         end 
 %%
     end
@@ -215,9 +217,11 @@ for suj = 1 : 12
        for mu =  1 : 9
             All_data(grpi).EMG(suj).mu(mu).name  = Data(grpi).EMG.mu(mu).name;
             All_data(grpi).EMG(suj).mu(mu).data  = Data(grpi).EMG.mu(mu).norm;
-         
+            All_data(grpi).EMG(suj).mu(mu).data_MVC  = Data(grpi).EMG.mu(mu).norm_MVC;
+            
             All_data(grpi).EMG(1).mean_EMG(mu).name = Data(grpi).EMG.mu(mu).name;
             All_data(grpi).EMG(1).mean_EMG(mu).data(suj,:) = mean(Data(grpi).EMG.mu(mu).norm);
+            All_data(grpi).EMG(1).mean_EMG(mu).data_MVC(suj,:) = mean(Data(grpi).EMG.mu(mu).norm_MVC);
        end
        
        for mark = 1 : length(Data(grpi).CINE)

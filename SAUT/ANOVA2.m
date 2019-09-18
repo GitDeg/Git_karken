@@ -8,7 +8,7 @@ clc
 addpath(genpath('C:\Users\p1218107\Documents\MATLAB'))
 %%
 % pathname = '\\10.89.24.15\j\Valentin\SAUT';
-pathname = 'C:\Users\p1218107\Documents\SAUT';
+pathname = 'C:\Users\p1218107\Documents\Data_Piano\SAUT';
 
 sujet = {'\001','\002','\003','\004','\005','\006','\007','\008','\009','\010','\011','\012'};
 
@@ -26,10 +26,10 @@ for mu = ordre_mu
        
     suj_set = [1:12]';
     
-    Y1 = All_data(1).EMG(1).mean_EMG(mu).data;
-    Y2 = All_data(2).EMG(1).mean_EMG(mu).data;
-    Y3 = All_data(3).EMG(1).mean_EMG(mu).data;
-    Y4 = All_data(4).EMG(1).mean_EMG(mu).data;
+    Y1 = All_data(1).EMG(1).mean_EMG(mu).data_MVC;
+    Y2 = All_data(2).EMG(1).mean_EMG(mu).data_MVC;
+    Y3 = All_data(3).EMG(1).mean_EMG(mu).data_MVC;
+    Y4 = All_data(4).EMG(1).mean_EMG(mu).data_MVC;
     
     suj_set = suj_set(~isnan(Y1(suj_set,1)));
     suj_set = suj_set(~isnan(Y2(suj_set,1)));

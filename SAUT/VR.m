@@ -6,27 +6,32 @@ clear all
 close all
 clc 
 
-addpath(genpath('C:\Users\p1218107\Documents\MATLAB'))
-%%
-% pathname = '\\10.89.24.15\j\Valentin\SAUT';
-pathname = 'C:\Users\p1218107\Documents\SAUT';
-sujet = {'\001','\002','\003','\004','\005','\006','\007','\008','\009','\010','\011','\012'};
+%% Ubuntu 
 
-load([pathname '\All_data.mat'])
+addpath(genpath('/media/valentin/060C6AFC0C6AE5E1/Users/p1218107/Documents/MATLAB'))
 
-%% Sélection des Datas à traiter  
+pathname = '/media/valentin/060C6AFC0C6AE5E1/Users/p1218107/Documents/Data_Piano/SAUT';
+sujet = {'/001','/002','/003','/004','/005','/006','/007','/008','/009','/010','/011','/012'};
+
+load([pathname '/All_data.mat'])
+
+%% Portable 
+
+
+
+%% Sï¿½lection des Datas ï¿½ traiter  
 %%%%%%%%%%%%% EMG %%%%%%%%%%%%%%
 
 for suj = 1 : 12 
     for grp = 1 : 6
         for mu = 1 : 9    
             %% Variance ratio (coefficient de dispertion) INTRA cycle : entre les cycles d'un meme muscle 
-            % On utilise toutes les données pour calculer la dispertion des cycles
+            % On utilise toutes les donnï¿½es pour calculer la dispertion des cycles
             % autour de la moyenne. ce coefficient permet de comparer des variations
             % lorsque les moyennes sont differentes. 
 
             
-            Xij = All_data(grp).EMG(suj).mu(mu).data  ;
+            Xij = All_data(grp).EMG(suj).mu(mu).data_MVC  ;
             nb_frame = length(Xij); % nb de frame
             n_data(grp,mu,suj) = size(Xij,1);
 
@@ -48,10 +53,10 @@ end
 for grp = 1 : 6
     for mu = 1 : 9   
         %% Variance ratio (coefficient de dispertion) INTER individuel : entre les sujets  
-        % Cette fois on utilise les données moyennes pour calculer la variation
-        % entre les sujet réalisant un meme test. 
+        % Cette fois on utilise les donnï¿½es moyennes pour calculer la variation
+        % entre les sujet rï¿½alisant un meme test. 
 
-        Xij = All_data(grp).EMG(1).mean_EMG(mu).data      ;
+        Xij = All_data(grp).EMG(1).mean_EMG(mu).data_MVC      ;
         Xi = nanmean(Xij);
         X = nanmean(Xi);
 
@@ -73,7 +78,7 @@ for grp = 1 : length(All_data)
     for suj = 1 : length(All_data(grp).CINE)
         for mark = 1 : length(All_data(grp).CINE(suj).mark  )   
             %% Variance ratio (coefficient de dispertion) INTRA cycle : entre les cycles d'un meme muscle 
-            % On utilise toutes les données pour calculer la dispertion des cycles
+            % On utilise toutes les donnï¿½es pour calculer la dispertion des cycles
             % autour de la moyenne. ce coefficient permet de comparer des variations
             % lorsque les moyennes sont differentes. 
 
@@ -229,28 +234,32 @@ figure
 hold on
 subplot(3,1,1)
 boxplot([reshape(boxplot_data_META5(1,:,:),12,4), reshape(boxplot_data_META2(1,1:12,5:6),12,2)])
-title('X antero-posterieur')
+title('X medio-lateral')
+ylim([0 1])
 subplot(3,1,2)
 boxplot([reshape(boxplot_data_META5(2,:,:),12,4), reshape(boxplot_data_META2(2,1:12,5:6),12,2)])
-title('Y medio-lateral')
+title('Y antero-posterieur')
+ylim([0 1])
 subplot(3,1,3)
 boxplot([reshape(boxplot_data_META5(3,:,:),12,4), reshape(boxplot_data_META2(3,1:12,5:6),12,2)])
 title('Z cranio-plantaire')
+ylim([0 1])
 
 %%
-close all
-figure
 
-grp = 5;
-for suj = 1 : 12
-    figure(suj) ; hold on; 
 
-%    plot3(All_data(1).CINE(suj).mark(1).mean_data(1,:), All_data(1).CINE(suj).mark(1).mean_data(2,:), All_data(1).CINE(suj).mark(1).mean_data(3,:), 'color', 'r', 'linewidth' , 2);
-    for cycle = 1 : 10
-        plot3(All_data(grp).CINE(suj).mark(1).data(cycle*3-2,:), All_data(grp).CINE(suj).mark(1).data(cycle*3-1,:), All_data(grp).CINE(suj).mark(1).data(cycle*3,:), 'color', 'b');
+for grp = 1 : 6
+    for suj = 1 : 12
+        figure(suj + 4)
+        subplot(3,2,grp);
+        hold on; 
+    %    plot3(All_data(1).CINE(suj).mark(1).mean_data(1,:), All_data(1).CINE(suj).mark(1).mean_data(2,:), All_data(1).CINE(suj).mark(1).mean_data(3,:), 'color', 'r', 'linewidth' , 2);
+        for cycle = 1 : 10
+            plot3(All_data(grp).CINE(suj).mark(1).data(cycle*3-2,:), All_data(grp).CINE(suj).mark(1).data(cycle*3-1,:), All_data(grp).CINE(suj).mark(1).data(cycle*3,:), 'color', 'b');
+        end
+        grid on
+        axis equal
     end
-    grid on
-    axis equal
 end
 
 %%
