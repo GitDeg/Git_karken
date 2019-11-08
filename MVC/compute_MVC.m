@@ -14,71 +14,71 @@ sujet = {'\001','\002','\003','\004','\005','\006','\007','\008','\009','\010','
 
 %%
 
-suj = 2;% : 12
+for suj = 1 : 12
+    close all
     
     load([pathname sujet{suj} '\MVC.mat'])
     EMG = [];
     for grp = 1 : length(MVC)
         EMG = [EMG , MVC(grp).RawData];
     end
-    
-    figure(suj)
-    for i = 1 : 10
-        subplot(5,2,i)
-        plot(EMG(i,:))
-        title(MVC(1).Labels(i))
-    end
-    
-    
-    %%
-    mu_selec = [2 3];
-    
-    for mu = 1:10
-        MVC_selec(mu).name = MVC(1).Labels{mu};
-        
-        if sum(mu == mu_selec)~=0
-            
-            temp = sort( abs(EMG(mu,:)));
-            
-            MVC_selec(mu).MVC = mean(temp( round((length(temp)-0.001*length(temp))) : length(temp)));
-        end
-        
-    end
-    
-    %%
-    mu_incom = [1 4 5 6 7 8 9 10];
-    for mu = 10
-        if sum(mu == mu_incom)~=0
-            interv = [1:14800 15500:length(EMG(mu,:))];
-            temp = sort( abs(EMG(mu, interv)));
-            MVC_selec(mu).MVC = mean(temp( round((length(temp)-0.001*length(temp))) : length(temp)));
-        end
-    end
-    
-    
-    %%
-    
-save([pathname sujet{suj} '\MVC_selec.mat'], 'MVC_selec')
 
-%%
+    for mu = 1 : 10
+        figure(mu)
+        MVC_corr(suj).mu(mu).data = EMG(mu,:);
+        plot(MVC_corr(suj).mu(mu).data)
+        title([MVC(1).Labels(mu), 'sujet ', sujet{suj}])
 
-for suj = 1 : 12
-    load([pathname sujet{suj} '\MVC_selec.mat'])
-    
-    for i = 1 : 10
-        if isempty(MVC_selec(i).MVC)
+        sat = 1;
+        sat = input('saturation ? 1 = oui / 0 = non ');
+        
+        while sat == 1 
+
+            s = imrect;
+            P = getPosition(s);
+            if (round(P(1)) +round(P(3))) > length(MVC_corr(suj).mu(mu).data)
+                P(3) = length(MVC_corr(suj).mu(mu).data) - round(P(1));
+            end
+            MVC_corr(suj).mu(mu).data(round(P(1)): round(P(1)) + round(P(3))) = [];
+            figure(mu)
+            plot(MVC_corr(suj).mu(mu).data)
+            title([MVC(1).Labels(mu), 'sujet ', sujet{suj}])
             
-            MVC_selec(i).MVC = NaN;
-            
+            sat = input('saturation ? 1 = oui / 0 = non ');
         end
     end
-    
-    All_MVC(1:8,suj) = [MVC_selec(1:8).MVC]';
-    All_MVC(9,suj) = nanmean([MVC_selec(9:10).MVC]);
 end
 
-save([pathname '\All_MVC.mat'], 'All_MVC')
+
+    
+    %%
+    
+load([pathname '\MVC_corr.mat'])
+
+F = 2250;
+
+for suj = 1 : 12
+    
+    for mu = 1:8
+        
+        A = sort(MVC_corr(suj).mu(mu).data);
+        n = length(A);
+        
+        All_MVC1s(mu,suj) = nanmedian(A(n-2250 : n));
+    end
+    
+    A1 = sort(MVC_corr(suj).mu(9).data);
+    A2 = sort(MVC_corr(suj).mu(10).data);
+    n1 = length(A1);
+    n2 = length(A2);
+    
+    All_MVC1s(9,suj) = nanmean( [nanmedian(A1(n1-2250 : n1)), nanmedian(A2(n2-2250 : n2)) ] );
+end
+
+
+%% 
+All_MVC1s(3,1) = NaN;
+All_MVC1s(7,2) = NaN;
+save([pathname '\All_MVC1s.mat'], 'All_MVC1s')
 
 %%
-
-nanmean(All_MVC,2)

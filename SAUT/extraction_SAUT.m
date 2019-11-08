@@ -75,7 +75,7 @@ for i=1:length(c3dfilesSAUT_int)
         [im, wh]= ismember(EMG_Vicon_Name{h}, AnalogNames);
         if im==1
             count=count+1; 
-            EMG_SAUT(i).RawData(count,:) = c3dDataSAUT.data.analogs(:,wh)'; %Matrice EMG, fichiers LA
+            EMG_SAUT(i).RawData(count,:) = c3dDataSAUT.data.analogs(:,wh)';  %Matrice EMG, fichiers LA
             EMG_SAUT(i).Labels    = [EMG_SAUT(i).Labels EMG_Vicon_Name(h)] ; %Nom des entrées EMG
         end
     end
@@ -89,13 +89,13 @@ for i=1:length(c3dfilesSAUT_int)
     CINE_SAUT(i).Rate = c3dDataSAUT.parameters.POINT.RATE;
     CINE_SAUT(i).Filename = c3dfilesSAUT_int(i).name(1,1:end-4);
 end
-
+end
 %% Sauvegarde
 
 % save(['C:\Users\p1218107\Documents\SAUT' sujet{suj} '\EMG_SAUT'],'EMG_SAUT');
-% save(['C:\Users\p1218107\Documents\SAUT' sujet{suj} '\CINE_SAUT'],'CINE_SAUT');
+save(['C:\Users\p1218107\Documents\SAUT' sujet{suj} '\CINE_SAUT'],'CINE_SAUT');
 % 
-save(['\\10.89.24.15\j\Valentin\SAUT' sujet{suj} '\EMG_SAUT'],'EMG_SAUT');
+% save(['\\10.89.24.15\j\Valentin\SAUT' sujet{suj} '\EMG_SAUT'],'EMG_SAUT');
 save(['\\10.89.24.15\j\Valentin\SAUT' sujet{suj} '\CINE_SAUT'],'CINE_SAUT');
 toc
-end
+% end

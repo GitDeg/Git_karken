@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%                           Découpage cycles                        %%%%
+%%%%                           Dï¿½coupage cycles                        %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 clear all
 close all
@@ -11,15 +11,16 @@ addpath(genpath('C:\Users\p1218107\Documents\MATLAB'))
 pathname = 'C:\Users\p1218107\Documents\Data_Piano\SAUT';
 sujet = {'\001','\002','\003','\004','\005','\006','\007','\008','\009','\010','\011','\012'};
 load('C:\Users\p1218107\Documents\Data_Piano\SAUT\allREPS.mat')
-load('C:\Users\p1218107\Documents\Data_Piano\MVC\All_MVC.mat')
+load('C:\Users\p1218107\Documents\Data_Piano\MVC\All_MVC01.mat')
+load('C:\Users\p1218107\Documents\Data_Piano\MVC\All_MVC1s.mat')
 
 GrpNames = {' AntiHoraire ', ...        %% 60 aigue toujours
             ' AntiHoraire Bassin ', ...
             ' Demicercle ', ...
             ' Demicercle Bassin '...
-            ' Frappé Staccato '...
-            ' Frappé Staccato Bassin'};
-%% Sélection des Datas à traiter
+            ' Frappï¿½ Staccato '...
+            ' Frappï¿½ Staccato Bassin'};
+%% Sï¿½lection des Datas ï¿½ traiter
 
 for suj = 1 : 12
 
@@ -34,17 +35,17 @@ for suj = 1 : 12
         
             
         MuscleNames = {'Triceps','Biceps','DeltAnt','DeltMed',...   % Uniformisation des noms des muscles
-                   'TrapSup','GrandDent','GrandPec','Extenseurs','Fléchisseurs'};
+                   'TrapSup','GrandDent','GrandPec','Extenseurs','Flï¿½chisseurs'};
 
         Data(grpi).Filename = GrpNames{grpi};
         
         DATA = EMG_SAUT(grpi).RawData;
         
-        %% préparation du filtrage
-        Fs = EMG_SAUT(grpi).Rate; %Féquence d'échantillonnage
+        %% prï¿½paration du filtrage
+        Fs = EMG_SAUT(grpi).Rate; %Fï¿½quence d'ï¿½chantillonnage
         Ts = 1/Fs;
         
-        [b,a] = butter(2,[5 500]/(Fs/2),'bandpass'); %Filtre passe bande, fenetre recommandée
+        [b,a] = butter(2,[5 500]/(Fs/2),'bandpass'); %Filtre passe bande, fenetre recommandï¿½e
         wind_length = round(30*10^(-3)/Ts); % fenetre de 30ms pour filtrage rms
         
         %% filtrage         
@@ -218,10 +219,12 @@ for suj = 1 : 12
             All_data(grpi).EMG(suj).mu(mu).name  = Data(grpi).EMG.mu(mu).name;
             All_data(grpi).EMG(suj).mu(mu).data  = Data(grpi).EMG.mu(mu).norm;
             All_data(grpi).EMG(suj).mu(mu).data_MVC  = Data(grpi).EMG.mu(mu).norm_MVC;
+            All_data(grpi).EMG(suj).mu(mu).data_MVC1s  = Data(grpi).EMG.mu(mu).cycle_select / All_MVC1s(mu,suj);
             
             All_data(grpi).EMG(1).mean_EMG(mu).name = Data(grpi).EMG.mu(mu).name;
             All_data(grpi).EMG(1).mean_EMG(mu).data(suj,:) = mean(Data(grpi).EMG.mu(mu).norm);
             All_data(grpi).EMG(1).mean_EMG(mu).data_MVC(suj,:) = mean(Data(grpi).EMG.mu(mu).norm_MVC);
+            All_data(grpi).EMG(1).mean_EMG(mu).data_MVC1s(suj,:)  = mean(All_data(grpi).EMG(suj).mu(mu).data_MVC1s);
        end
        
        for mark = 1 : length(Data(grpi).CINE)
@@ -251,12 +254,19 @@ All_data(3).EMG(1).mean_EMG(8).data(6,:) = NaN;
 All_data(4).EMG(6).mu(8).data = [];
 All_data(4).EMG(1).mean_EMG(8).data(6,:) = NaN;  
 
-save([pathname '\All_data.mat'], 'All_data')
+save([pathname '\All_data1s.mat'], 'All_data')
 
 %%
-
-grp = 6
-
+for suj = 1 : 12
+    figure(suj) 
+    for i = 1 : 10
+        hold on
+        plot3(Data.CINE.cycle_select(i*3-2,:), Data.CINE.cycle_select(i*3-1,:), Data.CINE.cycle_select(i*3,:))
+        axis equal
+    end
+    grid on
+end
+%%
 for suj = 1 : 12
     figure(suj)
     subplot(3,1,1)

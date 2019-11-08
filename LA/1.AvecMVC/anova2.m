@@ -12,7 +12,7 @@ pathname='C:\Users\p1218107\Documents\Data_Piano\LA\MVC\';
 cd(pathname)
 
 %load([pathname,'\All_grp.mat'])
-load([pathname,'\All_data_LA.mat'])
+load([pathname,'\All_data_LA_1s.mat'])
 
 ordre_mu = [9 8 2 1 3 4 7 5 6];
 
@@ -28,11 +28,12 @@ F=2100/5;
 subi = 0;
 
 t = 1/F -630/(2*F) : 1/F : 630/(2*F);
+t = t*1000;
 
-ylim_mu = [0 20; 0 15; 0 3; 0 7; 0 7; 0 5; 0 7; 0 10; 0 10];
+ylim_mu = [0 35; 0 30; 0 5; 0 10; 0 10; 0 7; 0 15; 0 15; 0 15];
 
 %%
-for mu = 9 %ordre_mu
+for mu = ordre_mu
     subi = subi + 1;
     sujets = [];
     clear('sY','Y','Y1','Y2','Y3','Y4','Yp1','Yp2','Yp3','Yp4','A','B')
@@ -45,6 +46,10 @@ for mu = 9 %ordre_mu
     
     if mu == 1 % retrait du sujet 1 pour le triceps car données incohérentes 
         Y1(1,1) = NaN;
+    end
+    
+    if mu == 7 % retrait du sujet 1 pour le triceps car données incohérentes 
+        Y1(10,1) = NaN;
     end
   
     
@@ -73,7 +78,7 @@ for mu = 9 %ordre_mu
     
     Y = [Y1; Y2; Y3; Y4; Y5; Y6; Y7; Y8];
 
-    iterations = 500 ; %1000;
+    iterations = 1000;
     A = [zeros(size(Y1,1),1); zeros(size(Y2,1),1); ones(size(Y3,1),1); ones(size(Y4,1),1); ...
         zeros(size(Y5,1),1); zeros(size(Y6,1),1); ones(size(Y7,1),1); ones(size(Y8,1),1)]; % frappé (0) / pressé (1)
     
@@ -85,7 +90,7 @@ for mu = 9 %ordre_mu
     F = spm1d.stats.nonparam.anova2rm(Y, A, B, Subj);
     Fi =F.inference(0.05,'iteration',iterations);
     
-    
+  
     %% Plot
     
     Titles = {'A. Struck/Pressed' 'B. Staccato/Tenuto' 'Interaction A/B'};
@@ -100,6 +105,7 @@ for mu = 9 %ordre_mu
     %%
     for clu = 1 : 2
         figure(1)
+%        subplot(1,2,subi*2-1+(clu-1))
         subplot(9,2,subi*2-1+(clu-1))
         hold on
 
@@ -114,14 +120,14 @@ for mu = 9 %ordre_mu
             legend(leg(clu,:),'Orientation', 'horizontal','FontSize',13, 'AutoUpdate', 'off')
         end        
 
-        xlim([-0.75 0.75])
+        xlim([-750 750])
         ylim(ylim_mu(subi,:))
         if subi~=9
             xticklabels({''})
         end
         
         if subi == 9
-            xlabel('Time (s)','FontSize',13)
+            xlabel('Time(ms)','FontSize',13)
         end
 
         delta = 63;
@@ -169,4 +175,4 @@ for mu = 9 %ordre_mu
 end
 
 % set(gcf, 'Position', get(0, 'Screensize'))
-% saveas(figure(1),['\\10.89.24.15\j\Valentin\Article EMG\figure MVC\all_mvc_hd_500'],'jpeg') 
+% saveas(figure(1),['\\10.89.24.15\j\Valentin\Article EMG\figure MVC\time(ms)'],'jpeg') 
