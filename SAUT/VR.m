@@ -228,26 +228,32 @@ figure
 subplot(3,2,1)
 boxplot(boxplot_data_EMG(ordre_mu,:,1)',{All_data(1).EMG(1).mu(ordre_mu).name})
 title(All_data(1).Filename)
+ylim([0 1])
 
 subplot(3,2,2)
 boxplot(boxplot_data_EMG(ordre_mu,:,2)',{All_data(1).EMG(1).mu(ordre_mu).name})
 title(All_data(2).Filename)
+ylim([0 1])
 
 subplot(3,2,3)
 boxplot(boxplot_data_EMG(ordre_mu,:,3)',{All_data(1).EMG(1).mu(ordre_mu).name})
 title(All_data(3).Filename)
+ylim([0 1])
 
 subplot(3,2,4)
 boxplot(boxplot_data_EMG(ordre_mu,:,4)',{All_data(1).EMG(1).mu(ordre_mu).name})
 title(All_data(4).Filename)
+ylim([0 1])
 
 subplot(3,2,5)
 boxplot(boxplot_data_EMG(ordre_mu,:,5)',{All_data(1).EMG(1).mu(ordre_mu).name})
 title(All_data(5).Filename)
+ylim([0 1])
 
 subplot(3,2,6)
 boxplot(boxplot_data_EMG(ordre_mu,:,6)',{All_data(1).EMG(1).mu(ordre_mu).name})
 title(All_data(6).Filename)
+ylim([0 1])
 
 %%
 figure 
@@ -257,6 +263,7 @@ for mu = ordre_mu
     subplot(3,3,mui)
     boxplot(reshape(boxplot_data_EMG(mu,:,:),12,6))
     title({All_data(1).EMG(1).mu(mu).name})
+    ylim([0 1])
 end
 
 

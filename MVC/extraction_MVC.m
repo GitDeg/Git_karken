@@ -13,7 +13,7 @@ addpath(genpath('C:\Users\p1218107\Documents\MATLAB'))
 addpath(genpath('C:\Users\Deg\Documents\MATLAB'))
 
 sujet = {'\001','\002','\003','\004','\005','\006','\007','\008','\009','\010','\011','\012'}; % Changer le nom du sujet
-%% Création des chemins d'acces
+%% Crï¿½ation des chemins d'acces
 
 pathname = '\\10.89.24.15\e\Projet_piano\Bassin';
 
@@ -22,13 +22,13 @@ pathname = '\\10.89.24.15\e\Projet_piano\Bassin';
 tic
 for suj= 1:length(sujet)
 
-repertoireMVC =    [pathname,sujet{suj},'\MVC']; % Changer pour le nom du répertoire avec tes essais au piano
+repertoireMVC =    [pathname,sujet{suj},'\MVC']; % Changer pour le nom du rï¿½pertoire avec tes essais au piano
 
 filesMVC = fullfile(repertoireMVC, '*.c3d'); 
 
 c3dfilesMVC = dir(filesMVC); 
 
-%% Création des structures de stockage
+%% Crï¿½ation des structures de stockage
 MVC=[];
 MVC.RawData=[];
 MVC.Labels={};
@@ -60,10 +60,10 @@ for i=1%:length(c3dfilesMVC)
         if im==1
             count=count+1
             MVC(i).RawData(count,:) = c3dDataMVC.data.analogs(:,wh)'; %Matrice EMG, fichiers LA
-            MVC(i).Labels    = [MVC(i).Labels EMG_Vicon_Name(h)] ; %Nom des entrées EMG
+            MVC(i).Labels    = [MVC(i).Labels EMG_Vicon_Name(h)] ; %Nom des entrï¿½es EMG
         end
     end
-    MVC(i).Rate = c3dDataMVC.parameters.ANALOG.RATE; %fréquence d'échantillonage.
+    MVC(i).Rate = c3dDataMVC.parameters.ANALOG.RATE; %frï¿½quence d'ï¿½chantillonage.
     MVC(i).Filename = c3dfilesMVC(i).name(1,1:end-4); %Nom de l'essai
     
 end
