@@ -20,7 +20,7 @@ pathname = '\\10.89.24.15\e\Projet_piano\Bassin';
 
 %%
 tic
-for suj= 2: 12 %2:length(sujet)
+for suj= [3 8 ] %2: 12 %2:length(sujet)
 
 
 repertoireLA =    [pathname,sujet{suj},'\EnregistrementLA']; % Changer pour le nom du répertoire avec tes essais au piano
