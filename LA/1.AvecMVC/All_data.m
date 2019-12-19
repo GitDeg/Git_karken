@@ -60,6 +60,7 @@ for grp = 1 : 8
             RMSE = []; 
             
             Data = Test(grp).suj(suj).mu(mu).data_ttt / All_MVC1s(mu,suj);
+            Test(grp).suj(suj).mu(mu).data_norm = Data;
             
             for i = 1 : size(Data,1)
                 RMSE(i) = sqrt( mean( ( Data(i,:) - mean(Data) ).^2)); 

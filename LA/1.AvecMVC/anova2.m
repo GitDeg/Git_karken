@@ -33,7 +33,7 @@ t = t*1000;
 ylim_mu = [0 35; 0 30; 0 5; 0 10; 0 10; 0 7; 0 15; 0 15; 0 15];
 
 %%
-for mu = ordre_mu
+for mu = 1 %ordre_mu
     subi = subi + 1;
     sujets = [];
     clear('sY','Y','Y1','Y2','Y3','Y4','Yp1','Yp2','Yp3','Yp4','A','B')
@@ -78,7 +78,7 @@ for mu = ordre_mu
     
     Y = [Y1; Y2; Y3; Y4; Y5; Y6; Y7; Y8];
 
-    iterations = 1000;
+    iterations = 1500;
     A = [zeros(size(Y1,1),1); zeros(size(Y2,1),1); ones(size(Y3,1),1); ones(size(Y4,1),1); ...
         zeros(size(Y5,1),1); zeros(size(Y6,1),1); ones(size(Y7,1),1); ones(size(Y8,1),1)]; % frappé (0) / pressé (1)
     
@@ -106,7 +106,7 @@ for mu = ordre_mu
     for clu = 1 : 2
         figure(1)
 %        subplot(1,2,subi*2-1+(clu-1))
-        subplot(9,2,subi*2-1+(clu-1))
+%        subplot(9,2,subi*2-1+(clu-1))
         hold on
 
         err_c1 = spm1d.plot.plot_errorcloud(t, mean( Y(clu1(:,clu),:)), std(Y(clu1(:,clu),:)), 'facecolor', clu_color(clu*2-1,:), 'facealpha',0.20) ;

@@ -36,7 +36,7 @@ for suj = 1 : 12
             mark = 1;
         end
 
-        ANOVA(:,suj,grpi) = [[All_data(grp).EMG(suj).mu.CV], All_data(grp).CINE(suj).mark(mark).XY_dist];
+        ANOVA(:,suj,grpi) = [[All_data(grp).EMG(suj).mu.CV], mean(All_data(grp).CINE(suj).mark(mark).XY_dist)];
 
         for mu = 1 : 9
             acti_mu(mu).EMG_max(:,suj,grpi) = mean(All_data(grp).EMG(suj).mu(mu).EMG_max)  ;
@@ -89,6 +89,12 @@ for parameter = ordre_mu % 1:size(ANOVA,1)
 
     name_parameters{parameter}
     disp_summ(res(parameter).Fi)
+%     
+%     F = spm1d.stats.nonparam.anova1rm(Y(A==0),B(A==0),Subj(A==0));
+%     result(parameter).Fi =F.inference(0.05,'iteration',iterations);
+%     
+%     
+%     disp(result(parameter).Fi)
     
     %% Figure
     

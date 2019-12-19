@@ -52,7 +52,7 @@ for suj = 1 : 12
 %             
             %% CV
             All_data(grp).EMG(suj).mu(mu).CV = sqrt(nanmean( nanstd(Xij).*nanstd(Xij) ))/nanmean(nanmean(Xij));
-%             All_data(grp).EMG(suj).mu(mu).CVi = nanstd(Xij)./nanmean(Xij);
+            All_data(grp).EMG(1).mean_EMG(mu).CVi(suj,:) = nanstd(Xij)./nanmean(Xij);
 %             
 %             %% CQV
 %             All_data(grp).EMG(suj).mu(mu).CQV = (prctile(Xij,75) - prctile(Xij,25)) ./ (prctile(Xij,75) + prctile(Xij,25));
