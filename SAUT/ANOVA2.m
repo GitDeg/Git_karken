@@ -7,12 +7,12 @@ clc
 
 %% Ubuntu 
 % 
-% addpath(genpath('/media/valentin/060C6AFC0C6AE5E1/Users/p1218107/Documents/MATLAB'))
-% 
-% pathname = '/media/valentin/060C6AFC0C6AE5E1/Users/p1218107/Documents/Data_Piano/SAUT';
-% sujet = {'/001','/002','/003','/004','/005','/006','/007','/008','/009','/010','/011','/012'};
-% 
-% load([pathname '/All_data1s.mat'])
+addpath(genpath('/media/valentin/060C6AFC0C6AE5E1/Users/p1218107/Documents/MATLAB'))
+
+pathname = '/media/valentin/060C6AFC0C6AE5E1/Users/p1218107/Documents/Data_Piano/SAUT';
+sujet = {'/001','/002','/003','/004','/005','/006','/007','/008','/009','/010','/011','/012'};
+
+load([pathname '/All_data1s_xy.mat'])
 
 %% Windows
 % pathname = '\\10.89.24.15\j\Valentin\SAUT';
